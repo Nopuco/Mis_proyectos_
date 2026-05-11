@@ -1,0 +1,17 @@
+name: "Auditor de Cumplimiento Automático"
+
+on: [push, pull_request] # Se activa en cada cambio de código
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Ejecutar Auditor Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          framework: terraform
+          soft_fail: false # Si hay un fallo de seguridad, bloquea el proceso
